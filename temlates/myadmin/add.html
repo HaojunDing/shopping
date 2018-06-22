@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}
+<title>后台会员添加</title>
+{% endblock %}
+
+{% block head %}
+<span class="am-icon-users page-header-heading-icon"></span> 用户添加 
+<small>User.Add</small>
+{% endblock %}
+
+
+{% block con %}
+<div class="widget-body am-fr">
+  <form action="{% url 'useradd' %}" method="post" enctype="multipart/form-data" class="am-form tpl-form-line-form">
+    {% csrf_token %}
+    <div class="am-form-group">
+      <label for="user-name" class="am-u-sm-3 am-form-label">用户名
+        </label>
+      <div class="am-u-sm-9">
+        <input type="text" required minlength="6" maxlength="32" class="tpl-form-input" name="username" id="user-name" placeholder="请输入用户名">
+        </div>
+    </div>
+
+<div class="am-form-group">
+      <label for="user-name" class="am-u-sm-3 am-form-label">密码
+        </label>
+      <div class="am-u-sm-9">
+        <input type="password" required class="tpl-form-input" name="password" id="user-name" placeholder="请输入用户密码">
+        </div>
+    </div>
+
+
+    <div class="am-form-group">
+      <label for="user-name" class="am-u-sm-3 am-form-label">姓名
+        </label>
+      <div class="am-u-sm-9">
+        <input type="text" required maxlength="10" class="tpl-form-input" name="name" id="user-name" placeholder="请输入姓名">
+        </div>
+    </div>
+    
+    <div class="am-form-group">
+      <label for="user-name" class="am-u-sm-3 am-form-label">Phone
+        </label>
+      <div class="am-u-sm-9">
+        <input type="text" required maxlength="11" class="tpl-form-input" name="phone" id="user-name" placeholder="请输入Phone">
+        </div>
+    </div>
+
+    
+    <div class="am-form-group">
+      <label for="user-name" class="am-u-sm-3 am-form-label">Email
+        </label>
+      <div class="am-u-sm-9">
+        <input type="email" required class="tpl-form-input" name="email" id="user-name" placeholder="请输入Email">
+        </div>
+    </div>
+
+    
+    <div class="am-form-group">
+      <label for="user-name" class="am-u-sm-3 am-form-label">年龄
+        </label>
+      <div class="am-u-sm-9">
+        <input type="text" required class="tpl-form-input" name="age" id="user-name" placeholder="请输入年龄">
+        </div>
+    </div>
+    
+
+
+    <div class="am-form-group">
+        <label for="user-name" class="am-u-sm-3 am-form-label">
+            性别
+        </label>
+        <div class="am-u-sm-9">
+            <label class="am-radio-inline"><input type="radio" value="男" name="sex" checked> <span style="color:#eee">男</span></label>
+            <label class="am-radio-inline"><input type="radio" value="女" name="sex"> <span style="color:#eee">女</span></label>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="am-form-group">
+      <label for="user-weibo" class="am-u-sm-3 am-form-label">头像
+        </label>
+      <div class="am-u-sm-9">
+        <div class="am-form-group am-form-file">
+          <div class="tpl-form-file-img">
+            <img src="/static/myadmin/pics/user.jpg" alt="" class="ipics" width="100" height="100"></div>
+          <button type="button" class="am-btn am-btn-danger am-btn-sm">
+            <i class="am-icon-cloud-upload"></i>上传头像</button>
+          <input id="doc-form-file" type="file" name="pic" multiple=""></div>
+      </div>
+    </div>
+
+
+
+    <div class="am-form-group">
+      <div class="am-u-sm-9 am-u-sm-push-3">
+        <button class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button></div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+<script type="text/javascript">
+    alert($)
+</script>
