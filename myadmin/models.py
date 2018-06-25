@@ -15,5 +15,9 @@ class Users(models.Model):
     addtime = models.DateTimeField(auto_now_add = True)
 
 
-
+class Types(models.Model):
+    # 无限分类
+    name = models.CharField(max_length=50)
+    pid = models.IntegerField()
+    path = models.CharField(max_length=50)
 

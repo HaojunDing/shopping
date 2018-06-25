@@ -7,7 +7,7 @@ import os
 def add(request):
     if request.method == 'GET':
         # show add 
-        return render(request,'myadmin/add.html')
+        return render(request,'myadmin/users/add.html')
     else:
         # 接收表单提交的数据 且转为字典格式
         data = request.POST.copy().dict()
@@ -26,7 +26,7 @@ def add(request):
                 if data['pic'] ==  1:
                     return HttpResponse('<script>alert("上传的文件类型不符合要求");location.href="'+reverse('useradd')+'"</script>')
             else:
-                del data['pic']
+                del data['pic'] 
 
             # print(data)
             ob = Users.objects.create(**data)
@@ -39,10 +39,58 @@ def add(request):
 
 # 列表
 def lists(request):
-    userlist = Users.objects.all()[:10]
-    context = {'userlist':userlist}
 
-    return render(request,'myadmin/lists.html',context)
+    # 获取搜索条件,通过lists.html获取类别name
+    types = request.GET.get('type',None)
+    keywords = request.GET.get('keywords',None)
+    print(types)
+    print(keywords)
+    if types:
+    # 判断是否有搜索条件
+        if types == 'all':
+            
+            # 全局搜索
+            from django.db.models import Q
+            userlist = Users.objects.filter(
+                Q(username__contains=keywords)|
+                Q(name__contains=keywords)|
+                Q(phone__contains=keywords)|
+                Q(email__contains=keywords)|
+                Q(sex__contains=keywords)
+                )
+        elif types=='username':
+            userlist = Users.objects.filter(username__contains=keywords)
+
+        elif types == 'name':
+            userlist = Users.objects.filter(name__contains=keywords)
+        elif types == 'phone':
+            userlist = Users.objects.filter(phone__contains=keywords)
+        elif types == 'email':
+            userlist = Users.objects.filter(email__contains=keywords)
+        print(userlist)
+
+    else:
+        userlist = Users.objects.filter()
+
+# 任务 给所有标签添加排序 
+    # 导入分页类
+    from django.core.paginator import Paginator
+    # 实例化分类对象,参数1 数据集合,参数2 显示条数
+
+    paginator = Paginator(userlist,10)
+
+    p = request.GET.get('p',1) 
+
+    userlists = paginator.page(p)
+
+    print(paginator.page(p))
+
+
+    
+    # userlist = Users.objects.all()[:10]
+    context = {'userlist':userlists}
+    
+    return render(request,'myadmin/users/lists.html',context)
 
 # 删除
 def delete(request):
@@ -77,7 +125,7 @@ def edit(request):
         # 分配数据
         context = {'uinfo':ob}
         # 显示编辑页面
-        return render(request,'myadmin/edit.html',context)
+        return render(request,'myadmin/users/edit.html',context)
 
     elif request.method == 'POST':
         try:
