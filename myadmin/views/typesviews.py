@@ -36,7 +36,7 @@ def add(request):
         ob = Types()
         ob.name = request.POST['name']
         ob.pid = request.POST['pid']
-        if ob.pid == 0:
+        if ob.pid == '0':
             ob.path = '0,'  
             print(ob.path)
         else:
@@ -54,12 +54,12 @@ def lists(request):
     return render(request,'myadmin/types/lists.html',context)
 
 
-def delete():
+def delete(request):
     tid = request.GET.get('uid',None)
-
     # 判断当前类下是否子类
+    print(tid)
     num = Types.objects.filter(pid=tid).count()
-
+    print(num)
     if num != 0:
          data = {'msg':'当前类下有子类,不能删除','code':1}
     else:
@@ -68,6 +68,10 @@ def delete():
         ob.delete()
 
         data = {'msg':'删除成功','code':0}
+    return JsonResponse(data)
 
-def edit():
+def edit(request):
+    if request.method == 'GET':
+        
+
     pass
